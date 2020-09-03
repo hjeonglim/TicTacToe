@@ -1,9 +1,9 @@
-''' Import random'''
+# Import random
 import random
 
 
 class Board():
-'''Create Board class, create a board'''
+    '''Create Board class, create a board'''
 
     def __init__(self):
         self.boards = ["#", " ", " ", " ", " ", " ", " ", " ", " ", " "]
@@ -81,29 +81,27 @@ def replay():
     else:
         return False
 
-board = Board()
-
-
-'''Use while loops and functions to run the game'''
+#Use while loops and functions to run the game
 print("Welcome to Tic-Tac-Toe")
 
 while True:
 
-    '''set up the board'''
+    # set up the board
     player1_marker, player2_marker = player_marker()
 
-    '''who plays first'''
+    # who plays first
     turn = play_first()
     print(f'{turn} goes first.')
 
-    '''Ask if ready to play'''
+    # Ask if ready to play
     ready_to_play = input("Ready to play? Yes or No").upper()
     if ready_to_play == 'YES':
         game_on = True
     else:
         game_on = False
 
-    '''start to play the game'''
+    # start to play the game
+    board = Board()
     while game_on:
         if turn == 'Player 1':
             board.display()
@@ -111,7 +109,7 @@ while True:
             position = player_move()
             board.update_board(position, player1_marker)
 
-            '''Win or tie check'''
+            # Check win or tie game
             if board.win_check(player1_marker):
                 board.display()
                 print("Congrats! Player 1 has won.")
@@ -141,6 +139,9 @@ while True:
                 else:
                     turn = 'Player 1'
 
-    '''want to play again'''
-    if not replay():
-        break
+    # want to play again
+    if replay():
+        game_on = True
+    else:
+        exit()
+
