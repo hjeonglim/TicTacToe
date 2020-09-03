@@ -1,4 +1,4 @@
-# Import random
+''' Import random'''
 import random
 
 
@@ -111,6 +111,7 @@ while True:
             position = player_move()
             board.update_board(position, player1_marker)
 
+            '''Win or tie check'''
             if board.win_check(player1_marker):
                 board.display()
                 print("Congrats! Player 1 has won.")
