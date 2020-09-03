@@ -1,5 +1,6 @@
 import random
 
+
 class Board():
 
     # Step 1 - create a board
@@ -15,33 +16,9 @@ class Board():
         print(f"{self.boards[1]} | {self.boards[2]} | {self.boards[3]}")
         print('---------')
 
-    # Step 2 - Player choose x or o
-
-    def player_marker(self):
-        self.marker = ' '
-
-        while not (self.marker == 'X' or self.marker == 'O'):
-            self.marker = input("Please choose X or O: ").upper()
-
-        if self.marker == 'X':
-            return 'X', 'O'
-        else:
-            return 'O', 'X'
-
-
     # Step 3 - update the board upon player's choice
     def update_board(self, position, marker):
         self.boards[position] = marker
-
-
-    # Step 4 - who plays first
-
-    def play_first(self):
-        if random.randint(0, 1) == 0:
-            return 'Player 1'
-        else:
-            return 'Player 2'
-
 
     # Step 5 - Win check
     def win_check(self, player):
@@ -55,44 +32,57 @@ class Board():
             (self.boards[1] == self.boards[5] == self.boards[9] == player) or
             (self.boards[3] == self.boards[5] == self.boards[7] == player))
 
-
     # Step 6 - Check availability
-
     def available_space(self, position):
-
         return self.boards[position] == ' '
 
     # Step 7 - full board check
-
     def full_board_check(self):
-
         for i in range(1, 10):
             if self.available_space(i):
                 return False
         return True
 
 
-    # Step 8 - Player's next move
+# Step 2 - Player choose x or o
+def player_marker():
+    marker = ' '
 
-    def player_move(self):
+    while not (marker == 'X' or marker == 'O'):
+        marker = input("Please choose X or O: ").upper()
 
-        position = 0
+    if marker == 'X':
+        return 'X', 'O'
+    else:
+        return 'O', 'X'
 
-        while position not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not self.available_space:
-            position = int(input('Please choose your next move: 1-9 '))
+# Step 4 - who plays first
+def play_first():
+    if random.randint(0, 1) == 0:
+        return 'Player 1'
+    else:
+        return 'Player 2'
 
-        return position
+# Step 8 - Player's next move
+def player_move():
+
+    position = 0
+
+    while position not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not board.available_space:
+        position = int(input('Please choose your next move: 1-9 '))
+
+    return position
+
+# Step 9 - Play again?
+def replay():
+    replay = input('Wanna play again? YES or NO').upper()
+
+    if replay == 'YES':
+        return True
+    else:
+        return False
 
 
-    # Step 9 - Play again?
-
-    def replay(self):
-        replay = input('Wanna play again? YES or NO').upper()
-
-        if replay == 'YES':
-            return True
-        else:
-            return False
 
 # Step 10 - Use while loops and functions to run the game
 
@@ -104,9 +94,9 @@ print("Welcome to Tic-Tac-Toe")
 while True:
 
     # set up the board
-    player1_marker, player2_marker = board.player_marker()
+    player1_marker, player2_marker = player_marker()
 
-    turn = board.play_first()
+    turn = play_first()
     print(f'{turn} goes first.')
 
     ready_to_play = input("Ready to play? Yes or No").upper()
@@ -119,7 +109,7 @@ while True:
         if turn == 'Player 1':
             board.display()
 
-            position = board.player_move()
+            position = player_move()
             board.update_board(position, player1_marker)
 
             if board.win_check(player1_marker):
@@ -136,7 +126,7 @@ while True:
         else:
             board.display()
 
-            position = board.player_move()
+            position = player_move()
             board.update_board(position, player2_marker)
 
             if board.win_check(player2_marker):
@@ -151,5 +141,5 @@ while True:
                 else:
                     turn = 'Player 1'
 
-    if not board.replay():
+    if not replay():
         break
