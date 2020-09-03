@@ -139,7 +139,7 @@ while True:
                 else:
                     turn = 'Player 1'
 
-    # want to play again
+    # Ask to play again
     if replay():
         game_on = True
     else:
